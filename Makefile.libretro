@@ -87,7 +87,7 @@ ifneq (,$(findstring unix,$(platform)))
    fpic := -fPIC
    SHARED := -shared -Wl,--version-script=$(CORE_DIR)/libretro/link.T -Wl,--no-undefined
    ENDIANNESS_DEFINES := -DLSB_FIRST -DBYTE_ORDER=LITTLE_ENDIAN
-   PLATFORM_DEFINES := -DHAVE_ZLIB
+   PLATFORM_DEFINES := -DHAVE_ZLIB -DMAXROMSIZE=16777216
 
    ifneq ($(findstring Linux,$(shell uname -s)),)
      HAVE_CDROM = 1
@@ -97,14 +97,14 @@ ifneq (,$(findstring unix,$(platform)))
    ifneq (,$(findstring rockpro64,$(platform)))
       ENDIANNESS_DEFINES += -DALIGN_LONG
       CFLAGS += -fomit-frame-pointer -ffast-math
-      PLATFORM_DEFINES += -DARM -marm -march=armv7ve -mcpu=cortex-a72 -mtune=cortex-a72.cortex-a53 -mfloat-abi=hard -DMAXROMSIZE=16777216
+      PLATFORM_DEFINES += -DARM -marm -march=armv7ve -mcpu=cortex-a72 -mtune=cortex-a72.cortex-a53 -mfloat-abi=hard
    endif
 
    # Rockchip RK3288 e.g. Asus Tinker Board / RK3328 e.g. PINE64 Rock64 / RK3399 e.g. PINE64 RockPro64 - 32-bit userspace
    ifneq (,$(findstring RK,$(platform)))
       ENDIANNESS_DEFINES += -DALIGN_LONG
       CFLAGS += -fomit-frame-pointer -ffast-math
-      PLATFORM_DEFINES += -DARM -marm -DMAXROMSIZE=16777216
+      PLATFORM_DEFINES += -DARM -marm
 
       ifneq (,$(findstring RK33,$(platform)))
          PLATFORM_DEFINES += -march=armv8-a+crc -mfpu=neon-fp-armv8
@@ -124,21 +124,21 @@ ifneq (,$(findstring unix,$(platform)))
    ifneq (,$(findstring classic_armv8_a35,$(platform)))
       ENDIANNESS_DEFINES += -DALIGN_LONG
       CFLAGS += -fomit-frame-pointer -ffast-math
-      PLATFORM_DEFINES += -DARM -marm -march=armv8-a+crc -mfpu=neon-fp-armv8 -mcpu=cortex-a35 -mtune=cortex-a35 -mfloat-abi=hard -DMAXROMSIZE=16777216
+      PLATFORM_DEFINES += -DARM -marm -march=armv8-a+crc -mfpu=neon-fp-armv8 -mcpu=cortex-a35 -mtune=cortex-a35 -mfloat-abi=hard 
    endif
 
    # Odroid-N2
    ifneq (,$(findstring CortexA73_G12B,$(platform)))
       ENDIANNESS_DEFINES += -DALIGN_LONG
       CFLAGS += -fomit-frame-pointer -ffast-math
-      PLATFORM_DEFINES += -DARM -march=armv8-a+crc -mcpu=cortex-a73 -mtune=cortex-a73.cortex-a53 -DMAXROMSIZE=16777216
+      PLATFORM_DEFINES += -DARM -march=armv8-a+crc -mcpu=cortex-a73 -mtune=cortex-a73.cortex-a53
    endif
 
    # Amlogic S905/S905X/S912 (AMLGXBB/AMLGXL/AMLGXM) e.g. Khadas VIM1/2 / S905X2 (AMLG12A) & S922X/A311D (AMLG12B) e.g. Khadas VIM3 - 32-bit userspace
    ifneq (,$(findstring AMLG,$(platform)))
       ENDIANNESS_DEFINES += -DALIGN_LONG
       CFLAGS += -fomit-frame-pointer -ffast-math
-      PLATFORM_DEFINES += -DARM -marm -march=armv8-a+crc -DMAXROMSIZE=16777216
+      PLATFORM_DEFINES += -DARM -marm -march=armv8-a+crc 
 
       ifneq (,$(findstring AMLG12,$(platform)))
          ifneq (,$(findstring AMLG12B,$(platform)))
@@ -159,11 +159,11 @@ ifneq (,$(findstring unix,$(platform)))
       ifneq (,$(findstring rpi1,$(platform)))
          PLATFORM_DEFINES += -DARM11 -marm -march=armv6j -mfpu=vfp -mfloat-abi=hard
       else ifneq (,$(findstring rpi2,$(platform)))
-         PLATFORM_DEFINES += -DARM -marm -mcpu=cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=hard -DMAXROMSIZE=16777216
+         PLATFORM_DEFINES += -DARM -marm -mcpu=cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=hard 
       else ifneq (,$(findstring rpi3,$(platform)))
-         PLATFORM_DEFINES += -DARM -marm -mcpu=cortex-a53 -mfpu=neon-fp-armv8 -mfloat-abi=hard -DMAXROMSIZE=16777216
+         PLATFORM_DEFINES += -DARM -marm -mcpu=cortex-a53 -mfpu=neon-fp-armv8 -mfloat-abi=hard 
       else ifneq (,$(findstring rpi4_64,$(platform)))
-         PLATFORM_DEFINES += -DARM -march=armv8-a+crc+simd -mtune=cortex-a72 -DMAXROMSIZE=16777216
+         PLATFORM_DEFINES += -DARM -march=armv8-a+crc+simd -mtune=cortex-a72 
       endif
    endif
    
