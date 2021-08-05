@@ -64,8 +64,8 @@ void sram_init()
   memset(&sram, 0, sizeof (T_SRAM));
 
   /* backup RAM data is stored above cartridge ROM area, at $800000-$80FFFF (max. 64K) */
-  if (cart.romsize > 0x800000) return;
-  sram.sram = cart.rom + 0x800000;
+  if (cart.romsize > 0xf00000) return;
+  sram.sram = cart.rom + 0xf00000;
 
   /* initialize Backup RAM */
   if (strstr(rominfo.international,"Sonic 1 Remastered"))
